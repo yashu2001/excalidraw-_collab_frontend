@@ -12,14 +12,14 @@ export default function App() {
   const [userName, setUserName] = useState("");
   const [roomJoined, setRoomJoined] = useState(false);
   const [wsConnection, setWsConnection] = useState(null);
-  const [viewModeEnabled, setViewModeEnabled] = useState(false);
-  const [zenModeEnabled, setZenModeEnabled] = useState(false);
-  const [gridModeEnabled, setGridModeEnabled] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [viewModeEnabled, _setViewModeEnabled] = useState(false);
+  const [zenModeEnabled, _setZenModeEnabled] = useState(false);
+  const [gridModeEnabled, _setGridModeEnabled] = useState(false);
+  const [theme, _setTheme] = useState("light");
   const [excalidrawElements, setExcalidrawElements] = useState("[]");
-  const [appState, setAppState] = useState({});
+  const [_appState, setAppState] = useState({});
   const [collaborators, setCollaborators] = useState({});
-  let wsConsumer = ActionCable.createConsumer("ws://172.105.61.10:3000//cable");
+  let wsConsumer = ActionCable.createConsumer("ws://172.105.61.10:3000/cable");
   // Handlers
   const handleOnChange = (elements, state) => {
     //console.log("change detected from excalidraw");

@@ -19,18 +19,18 @@ export default function App() {
   const [excalidrawElements, setExcalidrawElements] = useState("[]");
   const [appState, setAppState] = useState({});
   const [collaborators, setCollaborators] = useState({});
-  let wsConsumer = ActionCable.createConsumer("ws://192.168.29.20:5000/cable");
+  let wsConsumer = ActionCable.createConsumer("ws://172.105.61.10:3000//cable");
   // Handlers
   const handleOnChange = (elements, state) => {
-    console.log("change detected from excalidraw");
+    //console.log("change detected from excalidraw");
     const nonDeletedElements = elements.filter(
       (element) => element.isDeleted === false
     );
     setAppState(state);
-    console.log({ excalidrawElements, pendingEl: state.pendingImageElement });
+    //console.log({ excalidrawElements, pendingEl: state.pendingImageElement });
     if (excalidrawElements !== JSON.stringify(nonDeletedElements)) {
-      console.log("setting timeout");
-      console.log("sending websocket update");
+      //console.log("setting timeout");
+      //console.log("sending websocket update");
       wsConnection.perform("speak", {
         payload: { type: "elements", elements },
         room_id: roomId,
@@ -40,7 +40,7 @@ export default function App() {
     }
   };
   const reconcileAndUpdate = (remoteElements) => {
-    console.log("remote update received");
+    //console.log("remote update received");
     let updatedElements = reconcileElements(
       boardRef.current.getSceneElementsIncludingDeleted(),
       remoteElements,
@@ -63,7 +63,7 @@ export default function App() {
     collabUser.username = state.user;
     let collabObj={...collaborators,[state.user]:collabUser}
     setCollaborators(collabObj);
-    console.log({collabObj,collabUser})
+    //console.log({collabObj,collabUser})
     let collaboratorMap=new Map(Object.entries(collabObj))
     boardRef.current.updateScene({collaborators:collaboratorMap})
   };
@@ -72,7 +72,7 @@ export default function App() {
       { channel: "RoomChannel", room_id: roomId },
       {
         received: (state) => {
-          console.log({ state, userName, bool: state.user === userName });
+          //console.log({ state, userName, bool: state.user === userName });
           if (state.user !== userName) {
             if (
               state.payload.type === "elements" &&
@@ -80,7 +80,7 @@ export default function App() {
             ) {
               reconcileAndUpdate(state.payload.elements);
             } else if (state.payload.type === "pointer") {
-              console.log("updating pointer locaitons")
+              //console.log("updating pointer locaitons")
               updatePointerLocations(state);
             }
           }
